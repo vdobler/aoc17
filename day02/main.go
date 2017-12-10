@@ -39,6 +39,32 @@ func parseInput(s string) [][]int {
 	return sheet
 }
 
+func checksum2(sheet [][]int) int {
+	sum := 0
+	for _, row := range sheet {
+		sum += rowDiv(row)
+	}
+	return sum
+}
+
+func rowDiv(row []int) int {
+	N := len(row)
+	for i := 0; i < N-1; i++ {
+		for j := i + 1; j < N; j++ {
+			a, b := row[i], row[j]
+			if a < b {
+				a, b = b, a
+			}
+			r := a % b
+			if r == 0 {
+				return a / b
+			}
+		}
+	}
+
+	panic(row)
+}
+
 func main() {
 	input := `5 1 9 5
 7 5 3
@@ -65,4 +91,7 @@ func main() {
 
 	cs := checksum(sheet)
 	fmt.Println(cs)
+
+	cs2 := checksum2(sheet)
+	fmt.Println(cs2)
 }
